@@ -1,0 +1,113 @@
+import axios from "axios";
+import React, { useState } from "react";
+
+function CreateUser() {
+  const [formData, setFormData] = useState({
+    rollNo: "",
+    userName: "",
+    userMarks: "",
+    address: {
+      userCity: "",
+      userState: "",
+    },
+  });
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    if (name.startsWith("address.")) {
+      const addressField = name.split(".")[1];
+      setFormData({
+        ...formData,
+        address: {
+          ...formData.address,
+          [addressField]: value,
+        },
+      });
+    } else {
+      setFormData({
+        ...formData,
+        [name]: value,
+      });
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios
+      .post("http://localhost:8080/postUser", formData)
+      .then((response) => {
+        console.log("User created successfully:", response.data);
+        setFormData({
+          rollNo: "",
+          userName: "",
+          userMarks: "",
+          address: {
+            userCity: "",
+            userState: "",
+          },
+        });
+      })
+      .catch((error) => {
+        console.error("Error creating user:", error);
+      });
+  };
+
+  return (
+    <div>
+      <h2>Create User</h2>
+      <form onSubmit={handleSubmit}>
+        <label>
+          Roll No:
+          <input
+            type="text"
+            name="rollNo"
+            value={formData.rollNo}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          User Name:
+          <input
+            type="text"
+            name="userName"
+            value={formData.userName}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          User Marks:
+          <input
+            type="text"
+            name="userMarks"
+            value={formData.userMarks}
+            onChange={handleChange}
+          />
+        </label>
+
+        <label>
+          City:
+          <input
+            type="text"
+            name="address.userCity"
+            value={formData.address.userCity}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          State:
+          <input
+            type="text"
+            name="address.userState"
+            value={formData.address.userState}
+            onChange={handleChange}
+          />
+        </label>
+        <button type="submit">Create</button>
+      </form>
+    </div>
+  );
+}
+
+export default CreateUser;
+
