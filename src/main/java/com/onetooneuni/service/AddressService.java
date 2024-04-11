@@ -9,8 +9,4 @@ import com.onetooneuni.model.AddressModel;
 public interface AddressService {
 	AddressModel insert(AddressModel addressModel);
 	AddressModel getByCity(String userCity);
-	
-	
-	
-
 }
