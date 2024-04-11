@@ -22,8 +22,4 @@ public class AddressServiceImpl implements AddressService{
 	public AddressModel getByCity(String userCity) {
 		return addressRepository.findByUserCity(userCity);
 	}
-
-
-	
-
 }
