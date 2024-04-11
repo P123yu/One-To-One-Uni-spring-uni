@@ -20,9 +20,9 @@ public class UserModel {
 	private String userName;
 	private Double userMarks;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "fk_address_id", referencedColumnName = "addressId")
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(name = "fk_address_id", referencedColumnName = "addressId")
 	
-    private AddressModel address;
+        private AddressModel address;
 
 }
